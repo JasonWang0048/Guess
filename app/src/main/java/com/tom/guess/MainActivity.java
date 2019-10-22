@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     String TAG = MainActivity.class.getSimpleName();
     private int num;
     private TextView react;
+    int count;
+    private TextView com;
+    private Button butt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         edGuess = findViewById(R.id.guessing);
         react = findViewById(R.id.reaction);
+        com = findViewById(R.id.comment);
+        butt = findViewById(R.id.button);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -42,8 +48,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 secret = new Random().nextInt(10) + 1;
                 Log.d(TAG, "secret: " + secret);
+                count = 0;
+                edGuess.setText("");
                 react.setText("Trust your intuition.");
                 Toast.makeText(MainActivity.this, "You've restart the game!", Toast.LENGTH_LONG).show();
+                com.setVisibility(View.GONE);
+                edGuess.setVisibility(View.VISIBLE);
+                butt.setVisibility(View.VISIBLE);
+
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
             }
@@ -52,9 +64,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void guessNumber(View view) {
         num = Integer.parseInt(edGuess.getText().toString());
+        count++;
         if (num == secret) {
             react.setText("That is Right!!");
             Toast.makeText(MainActivity.this, "You're smart!", Toast.LENGTH_LONG).show();
+            if(count <= 3) {
+                com.setText("How genius you are!");
+            } else if (3 < count && count < 6) {
+                com.setText("Great job!");
+            } else {
+                com.setText("Haha, poor you!");
+            }
+            react.setText("You guess " + count + " times.");
+            com.setVisibility(View.VISIBLE);
+            edGuess.setVisibility(View.GONE);
+            butt.setVisibility(View.GONE);
         } else if (num > 10 || num < 1) {
             react.setText("You're out of range...");
             Toast.makeText(MainActivity.this, "Please guess 1~10", Toast.LENGTH_LONG).show();
