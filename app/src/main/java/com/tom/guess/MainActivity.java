@@ -40,8 +40,12 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                secret = new Random().nextInt(10) + 1;
+                Log.d(TAG, "secret: " + secret);
+                react.setText("Trust your intuition.");
+                Toast.makeText(MainActivity.this, "You've restart the game!", Toast.LENGTH_LONG).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
     }
@@ -51,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         if (num == secret) {
             react.setText("That is Right!!");
             Toast.makeText(MainActivity.this, "You're smart!", Toast.LENGTH_LONG).show();
+        } else if (num > 10 || num < 1) {
+            react.setText("You're out of range...");
+            Toast.makeText(MainActivity.this, "Please guess 1~10", Toast.LENGTH_LONG).show();
         } else {
             react.setText("Wrong! Try again~");
             if (num < secret) {
