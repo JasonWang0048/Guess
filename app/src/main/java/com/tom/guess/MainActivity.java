@@ -70,19 +70,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void guessNumber(View view) {
-        num = Integer.parseInt(edGuess.getText().toString());
-        count++;
-        edCount.setText(count + "");
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                reset();
-            }
-        };
+        try {
+            num = Integer.parseInt(edGuess.getText().toString());
+            count++;
+            edCount.setText(count + "");
+            DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    reset();
+                }
+            };
 //        if (num == secret) {
 //            react.setText("That is Right!!");
 //            Toast.makeText(MainActivity.this, "You're smart!", Toast.LENGTH_LONG).show();
-            if(count <= 3) {
+            if (count <= 3) {
 //                com.setText("How genius you are!");
                 word = "How genius you are!";
             } else if (3 < count && count < 6) {
@@ -92,14 +93,14 @@ public class MainActivity extends AppCompatActivity {
                 word = "Haha, poor you!";
 //                com.setText("Haha, poor you!");
             }
-    //        react.setText("You guess " + count + " times.");
-    //        com.setVisibility(View.VISIBLE);
-    //        edGuess.setVisibility(View.GONE);
-    //        butt.setVisibility(View.GONE);
-    //    } else if (num > 10 || num < 1) {
-    //        react.setText("You're out of range...");
-    //        Toast.makeText(MainActivity.this, "Please guess 1~10", Toast.LENGTH_LONG).show();
-    //    } else {
+            //        react.setText("You guess " + count + " times.");
+            //        com.setVisibility(View.VISIBLE);
+            //        edGuess.setVisibility(View.GONE);
+            //        butt.setVisibility(View.GONE);
+            //    } else if (num > 10 || num < 1) {
+            //        react.setText("You're out of range...");
+            //        Toast.makeText(MainActivity.this, "Please guess 1~10", Toast.LENGTH_LONG).show();
+            //    } else {
 //            react.setText("Wrong! Try again~");
             message = "That is Right!!";
             if (num < secret) {
@@ -118,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
                     .setMessage(word)
                     .setPositiveButton("OK", listener)
                     .show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         }
     //}
     public void reset() {
